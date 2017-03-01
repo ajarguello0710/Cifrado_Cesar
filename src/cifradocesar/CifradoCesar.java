@@ -1,5 +1,4 @@
 package cifradocesar;
-import java.lang.Math;
 import java.util.Scanner;
 /**
  * @author Anggy Arguello - Holmes Ayala
@@ -9,8 +8,8 @@ public class CifradoCesar {
     String texto;
     int opcion, clave, letra;
     char[] abecedario={'a','b','c','d','e','f','g','h','i','j','k','l','m',
-        'n','o','p','q','r','s','t','u','v','w','x','y','z',32,';',','};
-    char[] textoUno;
+        'n','o','p','q','r','s','t','u','v','w','x','y','z',' ',';',','};
+    char[]textoUno;
     
     public CifradoCesar(){//Constructor, aqui se llaman los metodos
         menuCifrado();
@@ -23,11 +22,26 @@ public class CifradoCesar {
         }
     }
     private void menuCifrado(){
-        System.out.println("Ingrese: ");
-        System.out.println("1. Cifrar o 2.Descifrar  ");
-        opcion = leer.nextInt();
-        System.out.println("Ingrese la clave");
-        clave = leer.nextInt();
+        boolean validar;
+        do{
+            validar = true;
+            System.out.println("Ingrese");
+            System.out.print("1. Cifrar o 2.Descifrar: ");
+            opcion = leer.nextInt();
+            if(opcion < 1 || opcion > 2){
+                System.out.println("Opcion no valida!");
+                validar = false;
+            }
+        }while(!validar);
+        do{
+            validar = true;
+            System.out.println("Ingrese la clave");
+            clave = leer.nextInt();
+            if(clave <= 0){
+                System.out.println("Clave no valida.");
+                validar = false;
+            }
+        }while(!validar);
     }
     
     private void solicitarTexto(){
@@ -38,12 +52,9 @@ public class CifradoCesar {
                 texto = leer.nextLine(); 
                 break;
             case 2:
-                System.out.println("Ingrese el texto a descifrar");
+                System.out.println("Ingrese el texto a descifrar: ");
                 leer.nextLine();
                 texto = leer.nextLine();
-                break;
-            case 3:
-                System.out.println("Opcion Invalida");
                 break;
         }
         //Pasamos la cadena a un arreglo 
@@ -52,6 +63,8 @@ public class CifradoCesar {
     }
     
     private void cifrarTexto(){
+        System.out.println();
+        System.out.println("Texto cifrado:");
         int j = 0;
         for(int i = 0; i < abecedario.length; i++){
            //System.out.println(i);
@@ -62,23 +75,46 @@ public class CifradoCesar {
                 //System.out.print(abecedario.length);
                 i = -1;
                 j++;
+                if(j == textoUno.length){
+                    break;
+                }
             }
         }
+        System.out.println();
     }
     
     private void descifrarTexto(){
+        System.out.println();
+        System.out.println("Texto descifrado:");
         int j = 0;
         for(int i = 0; i < abecedario.length; i++){
            // System.out.println(i);
             if(textoUno[j] == abecedario[i]){
-                letra = (clave - i) % abecedario.length;
-                letra = Math.abs(letra);
-                //System.out.println(letra);
+                letra = 0;
+                int contadorAtras = i;
+                //  Lo que hace es retroceder en el abecedario un numero de veces
+                //  igual a la clave Ejem: clave = 15 -> retrocede 15 veces y si
+                //  llega a la posicion [0] retoma en la posicion [28]
+                while(contadorAtras < abecedario.length){
+                    contadorAtras--;
+                    letra++;
+                    if(contadorAtras == -1){
+                        contadorAtras = abecedario.length - 1;
+                    }
+                    if(letra == clave){
+                        letra = contadorAtras;
+                        i = -1;
+                        j++;
+                        break;
+                    }
+                }
                 System.out.print(abecedario[letra]);
-                i = -1;
-                j++;
+                if(j == textoUno.length){
+                    break;
+                }
             }
         }
+        System.out.println();
     }   
     
     public static void main(String[] args) {
