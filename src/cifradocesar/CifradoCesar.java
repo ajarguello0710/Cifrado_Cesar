@@ -3,6 +3,10 @@ import java.util.Scanner;
 /**
  * @author Anggy Arguello - Holmes Ayala
  */
+/**
+ * 
+ * Clase principal
+ */
 public class CifradoCesar {
     Scanner leer = new Scanner(System.in);
     String texto;
@@ -21,8 +25,12 @@ public class CifradoCesar {
             descifrarTexto();
         }
     }
-    private void menuCifrado(){
+    /**
+     * En este metodo se encuentra el menu de seleccion
+     */
+    public void menuCifrado(){
         boolean validar;
+        //Valida que la opcion sea correcta
         do{
             validar = true;
             System.out.println("Ingrese");
@@ -33,6 +41,7 @@ public class CifradoCesar {
                 validar = false;
             }
         }while(!validar);
+        //Valida que la clave no sea 0 o tenga un numero negativo
         do{
             validar = true;
             System.out.println("Ingrese la clave");
@@ -43,8 +52,10 @@ public class CifradoCesar {
             }
         }while(!validar);
     }
-    
-    private void solicitarTexto(){
+    /**
+     * Este metodo nos recibe el texto
+     */
+    public void solicitarTexto(){
         switch(opcion){
             case 1:
                System.out.println("Ingrese el texto a cifrar: ");
@@ -61,8 +72,10 @@ public class CifradoCesar {
         textoUno = texto.toCharArray();
         
     }
-    
-    private void cifrarTexto(){
+    /**
+     * Este metodo cifra el texto ingresado
+     */
+    public void cifrarTexto(){
         System.out.println();
         System.out.println("Texto cifrado:");
         int j = 0;
@@ -82,8 +95,10 @@ public class CifradoCesar {
         }
         System.out.println();
     }
-    
-    private void descifrarTexto(){
+    /**
+     * Este metodo descifra el texto ingresado si la opcion lo pide
+     */
+    public void descifrarTexto(){
         System.out.println();
         System.out.println("Texto descifrado:");
         int j = 0;
